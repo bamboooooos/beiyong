@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
-    static private int conut=0;
     private ArrayList<Book> books;
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView textView;
@@ -37,12 +36,11 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         Book book=books.get(position);
         holder.textView.setText(book.getName());
-        if(BookAdapter.conut%2==1){
-            holder.itemView.setBackgroundColor(Color.CYAN);
+        if((books.size()-position)%2==0){
+            holder.itemView.setBackgroundColor(Color.GRAY);
         }else{
-            holder.itemView.setBackgroundColor(Color.YELLOW);
+            holder.itemView.setBackgroundColor(Color.LTGRAY);
         }
-        BookAdapter.conut++;
     }
 
     @Override
