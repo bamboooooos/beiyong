@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/clear"
+        android:title="清除"
+        android:icon="@mipmap/clear"
+        app:showAsAction="always"
+    />
+    <item
+        android:id="@+id/change"
+        android:title="编辑"
+        android:icon="@mipmap/change"
+        app:showAsAction="always"
+        />
+</menu>
