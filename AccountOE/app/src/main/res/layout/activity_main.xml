@@ -19,45 +19,82 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/isNull"
             android:layout_below="@id/toolbar"
-            android:id="@+id/createALitePal"
-            android:text="创建新的数据库"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/createALitePal"
-            android:id="@+id/add"
-            android:text="添加数据"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/add"
-            android:id="@+id/data"
-            android:text="查询数据"/>
-
+            android:textSize="30sp"
+            android:layout_centerHorizontal="true"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/newerAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/data" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="250dp"
-        android:layout_height="match_parent"
-        android:id="@+id/left"
-        android:layout_gravity="start"
-        android:background="#FAEBD7">
-        <TextView
+            android:layout_below="@id/toolbar"
+            android:layout_above="@id/edi_number"/>
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/left_What"
-            android:text="这是一个滑动界面"
-            android:textSize="20sp"/>
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="确定添加"
+            android:id="@+id/getAc"/>
+
+        <EditText
+            android:id="@+id/edi_year"
+            android:layout_width="80sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:hint="输入年"
+            android:maxLines="1"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edi_month"
+            android:layout_width="80sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/edi_year"
+            android:hint="月"
+            android:maxLines="1"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edi_day"
+            android:layout_width="80sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@id/edi_month"
+            android:hint="日"
+            android:maxLines="1"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edi_number"
+            android:layout_width="120sp"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/edi_year"
+            android:hint="输入金额(整数)"
+            android:maxLines="1"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/edi_WhatDo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/edi_number"
+            android:layout_above="@id/edi_year"
+            android:hint="备注"
+            android:maxLines="1"
+            android:textSize="15sp" />
     </RelativeLayout>
+    <android.support.design.widget.NavigationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/nav_view"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu"
+        />
 
 </android.support.v4.widget.DrawerLayout>

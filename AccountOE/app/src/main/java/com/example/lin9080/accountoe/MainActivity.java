@@ -14,7 +14,9 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -27,9 +29,9 @@ import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
-    private int conut=1;
     private DrawerLayout mDrawerLayout;
     private ArrayList<Account> accounts=new ArrayList<>();
+    final AccountAdapter adapter=new AccountAdapter(accounts);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,36 +44,50 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.toleft_dr);
         }
-        ((Button)findViewById(R.id.createALitePal)).setOnClickListener(new View.OnClickListener() {
+        //以上为界面初始化设置
+        LitePal.getDatabase();//数据库初始化
+        ArrayList<Account> nAccounts=(ArrayList<Account>)DataSupport.findAll(Account.class);
+        for(int i=nAccounts.size()-1;i>=0;i--){
+            accounts.add(nAccounts.get(i));
+        }
+        isAcsNull();
+        final RecyclerView recyclerView=(RecyclerView)findViewById(R.id.newerAccount);
+        LinearLayoutManager manager=new LinearLayoutManager(MainActivity.this);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(adapter);
+        //以上为初始数据设置
+        (findViewById(R.id.getAc)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LitePal.getDatabase();
-            }
-        });
-        final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        ((Button)findViewById(R.id.add)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Account account=new Account(conut*5,df.format(new Date()),"测试",conut%9);
-                account.save();
-                conut++;
-            }
-        });
-        ((Button)findViewById(R.id.data)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                accounts= (ArrayList<Account>) DataSupport.findAll(Account.class);
-                for(int i=0;i<accounts.size();i++) {
-                    Log.d("test", accounts.get(i).getNumber()+","+accounts.get(i).getUseTime()+","+accounts.get(i).getWhatDo());
+                String year=((TextView)findViewById(R.id.edi_year)).getText().toString();
+                ((TextView)findViewById(R.id.edi_year)).setText("");
+                String month=((TextView)findViewById(R.id.edi_month)).getText().toString();
+                ((TextView)findViewById(R.id.edi_month)).setText("");
+                String day=((TextView)findViewById(R.id.edi_day)).getText().toString();
+                ((TextView)findViewById(R.id.edi_day)).setText("");
+                String time=year+"-"+ month+"-"+day;
+                String WhatDo=((TextView)findViewById(R.id.edi_WhatDo)).getText().toString();
+                ((TextView)findViewById(R.id.edi_WhatDo)).setText("");
+                String number=((TextView)findViewById(R.id.edi_number)).getText().toString();
+                ((TextView)findViewById(R.id.edi_number)).setText("");
+                if(!isNumber(year)||!isNumber(month)||!isNumber(day)){
+                    Toast.makeText(MainActivity.this,"日期输入不规范！",Toast.LENGTH_SHORT).show();
+                }else if(!isNumber(number)){
+                    Toast.makeText(MainActivity.this,"金额输入不规范！",Toast.LENGTH_SHORT).show();
+                }else {
+                    Account account = new Account();
+                    account.setNumber("金额:"+number);
+                    account.setUseTime("时间:"+time);
+                    account.setWhatDo(WhatDo);
+                    account.save();
+                    accounts.add(0, account);
+                    isAcsNull();
+                    adapter.notifyItemInserted(0);
+                    recyclerView.getLayoutManager().scrollToPosition(0);
                 }
-                RecyclerView recyclerView=findViewById(R.id.newerAccount);
-                LinearLayoutManager layoutManager=new LinearLayoutManager(MainActivity.this);
-                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                recyclerView.setLayoutManager(layoutManager);
-                AccountAdapter adapter=new AccountAdapter(accounts);
-                recyclerView.setAdapter(adapter);
             }
         });
+        //以上为数据库相关设置
     }
 
     @Override
@@ -90,6 +106,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         DataSupport.deleteAll(Account.class);
+                        RecyclerView recyclerView=findViewById(R.id.newerAccount);
+                        recyclerView.removeAllViews();
+                        accounts.clear();
+                        adapter.notifyDataSetChanged();
+                        isAcsNull();
                     }
                 });
                 dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -109,5 +130,26 @@ public class MainActivity extends AppCompatActivity {
             default:
         }
         return true;
+    }
+    boolean isNumber(String string){
+        if(string.length()<=0) {
+            return false;
+        }else{
+            for (int i = 0; i < string.length(); i++) {
+                if (!Character.isDigit(string.charAt(i))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    boolean isAcsNull(){
+        if(accounts.isEmpty()){
+            ((TextView)findViewById(R.id.isNull)).setText("账簿暂无账目");
+            return false;
+        }else{
+            ((TextView)findViewById(R.id.isNull)).setText("");
+            return true;
+        }
     }
 }

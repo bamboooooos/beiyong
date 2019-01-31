@@ -1,5 +1,6 @@
 package com.example.lin9080.accountoe;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,6 +42,39 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
         holder.number.setText(account.getNumber()+"");
         holder.Time.setText(account.getUseTime()+"");
         holder.WhatDo.setText(account.getWhatDo()+"");
+        switch (account.getPurpose()){
+            case 1:
+                holder.itemView.setBackgroundColor(Color.GREEN);
+                break;
+            case 2:
+                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                break;
+            case 3:
+                holder.itemView.setBackgroundColor(Color.RED);
+                break;
+            case 4:
+                holder.itemView.setBackgroundColor(Color.WHITE);
+                break;
+            case 5:
+                holder.itemView.setBackgroundColor(Color.CYAN);
+                break;
+            case 6:
+                holder.itemView.setBackgroundColor(Color.BLUE);
+                break;
+            case 7:
+                holder.itemView.setBackgroundColor(Color.MAGENTA);
+                break;
+            case 8:
+                holder.itemView.setBackgroundColor(Color.GRAY);
+                break;
+            case 9:
+                holder.itemView.setBackgroundColor(Color.DKGRAY);
+                break;
+            case 0:
+                holder.itemView.setBackgroundColor(Color.YELLOW);
+                break;
+                default:
+        }
     }
 
     @Override

@@ -3,28 +3,28 @@ package com.example.lin9080.accountoe;
 import org.litepal.crud.DataSupport;
 
 public class Account extends DataSupport {
-    private int number;
+    private String number;
     private String useTime;
     private String whatDo;
-    private int purpose;//1:饮食2:服饰美容3:生活日用4:住房缴费5:交通出行6:通讯物流7:文教娱乐8:运动健康0:其他消费
+    private int purpose=0;//1:饮食2:服饰美容3:生活日用4:住房缴费5:交通出行6:通讯物流7:文教娱乐8:运动健康0:其他消费
     private String diary;
 
     public Account() {
 
     }
 
-    public Account(int number, String useTime, String whatDo, int purpose) {
+    public Account(String number, String useTime, String whatDo, int purpose) {
         this.number = number;
         this.useTime = useTime;
         this.whatDo = whatDo;
         this.purpose = purpose;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
