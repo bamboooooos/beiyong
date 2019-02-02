@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +22,14 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
         TextView number;
         TextView Time;
         TextView WhatDo;
+        TextView Purpose;
 
         public ViewHolder(View view){
             super(view);
             number=(TextView)view.findViewById(R.id.newerNumber);
             Time=(TextView)view.findViewById(R.id.newerTime);
             WhatDo=(TextView) view.findViewById(R.id.newerWhatDo);
+            Purpose=(TextView) view.findViewById(R.id.newerPurpose);
         }
     }
 
@@ -39,39 +43,49 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Account account=maccounts.get(position);
-        holder.number.setText(account.getNumber()+"");
-        holder.Time.setText(account.getUseTime()+"");
+        holder.number.setText("金额"+account.getNumber()+"");
+        holder.Time.setText("时间"+account.getUseTime()+"");
         holder.WhatDo.setText(account.getWhatDo()+"");
         switch (account.getPurpose()){
             case 1:
-                holder.itemView.setBackgroundColor(Color.GREEN);
+                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.Purpose.setText("饮食");
                 break;
             case 2:
                 holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.Purpose.setText("服饰美容");
                 break;
             case 3:
-                holder.itemView.setBackgroundColor(Color.RED);
+                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.Purpose.setText("生活日用");
                 break;
             case 4:
-                holder.itemView.setBackgroundColor(Color.WHITE);
+                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.Purpose.setText("住房缴费");
                 break;
             case 5:
-                holder.itemView.setBackgroundColor(Color.CYAN);
+                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.Purpose.setText("交通出行");
                 break;
             case 6:
-                holder.itemView.setBackgroundColor(Color.BLUE);
+                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.Purpose.setText("通讯物流");
                 break;
             case 7:
-                holder.itemView.setBackgroundColor(Color.MAGENTA);
+                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.Purpose.setText("文教娱乐");
                 break;
             case 8:
-                holder.itemView.setBackgroundColor(Color.GRAY);
+                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.Purpose.setText("运动健康");
                 break;
             case 9:
-                holder.itemView.setBackgroundColor(Color.DKGRAY);
+                holder.itemView.setBackgroundColor(Color.GRAY);
+                holder.Purpose.setText("收入");
                 break;
             case 0:
-                holder.itemView.setBackgroundColor(Color.YELLOW);
+                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.Purpose.setText("其他");
                 break;
                 default:
         }

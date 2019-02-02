@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.lin9080.accountoe">
+    package="org.angmarc.app">
 
     <application
-        android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
-        android:icon="@drawable/week"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Time_howlong"
-            android:label="查看以往账簿"></activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="不,是你的账簿">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

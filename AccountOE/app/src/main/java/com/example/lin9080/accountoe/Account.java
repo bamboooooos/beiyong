@@ -6,8 +6,17 @@ public class Account extends DataSupport {
     private String number;
     private String useTime;
     private String whatDo;
-    private int purpose=0;//1:饮食2:服饰美容3:生活日用4:住房缴费5:交通出行6:通讯物流7:文教娱乐8:运动健康0:其他消费
+    private int purpose;//1:饮食2:服饰美容3:生活日用4:住房缴费5:交通出行6:通讯物流7:文教娱乐8:运动健康0:其他消费9:收入
     private String diary;
+    private int isGo;
+
+    public int getIsGo() {
+        return isGo;
+    }
+
+    public void setIsGo(int isGo) {
+        this.isGo = isGo;
+    }
 
     public Account() {
 

@@ -1,6 +1,9 @@
 package com.example.lin9080.accountoe;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -15,23 +18,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import org.angmarch.views.NiceSpinner;
 import org.litepal.LitePal;
 import org.litepal.crud.DataSupport;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ArrayList<Account> accounts=new ArrayList<>();
     final AccountAdapter adapter=new AccountAdapter(accounts);
+    int newPurpose=0;
+    int newIsGo=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +55,17 @@ public class MainActivity extends AppCompatActivity {
         //以上为界面初始化设置
         LitePal.getDatabase();//数据库初始化
         ArrayList<Account> nAccounts=(ArrayList<Account>)DataSupport.findAll(Account.class);
+        int len=0;
         for(int i=nAccounts.size()-1;i>=0;i--){
             accounts.add(nAccounts.get(i));
+            if(len==9){
+                break;
+            }
+            len++;
         }
         isAcsNull();
         final RecyclerView recyclerView=(RecyclerView)findViewById(R.id.newerAccount);
-        LinearLayoutManager manager=new LinearLayoutManager(MainActivity.this);
+        final LinearLayoutManager manager=new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
         //以上为初始数据设置
@@ -76,11 +89,20 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,"金额输入不规范！",Toast.LENGTH_SHORT).show();
                 }else {
                     Account account = new Account();
-                    account.setNumber("金额:"+number);
-                    account.setUseTime("时间:"+time);
+                    account.setNumber(number);
+                    account.setUseTime(time);
                     account.setWhatDo(WhatDo);
+                    account.setPurpose(newPurpose);
+                    account.setIsGo(newIsGo);
                     account.save();
                     accounts.add(0, account);
+                    while (true) {
+                        if (accounts.size() > 10) {
+                            accounts.remove(10);
+                        }else{
+                            break;
+                        }
+                    }
                     isAcsNull();
                     adapter.notifyItemInserted(0);
                     recyclerView.getLayoutManager().scrollToPosition(0);
@@ -88,6 +110,96 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //以上为数据库相关设置
+
+        NiceSpinner purpose = (NiceSpinner)findViewById(R.id.edi_purpose);
+        List<String> ppsList = new ArrayList<>();
+        ppsList.add("饮食");
+        ppsList.add("服饰美容");
+        ppsList.add("生活日用");
+        ppsList.add("住房缴费");
+        ppsList.add("交通出行");
+        ppsList.add("通讯物流");
+        ppsList.add("文教娱乐");
+        ppsList.add("运动健康");
+        ppsList.add("其他消费");
+        ppsList.add("收入");
+        purpose.attachDataSource(ppsList);
+        purpose.addOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0 :
+                        newPurpose=0;
+                        newIsGo=0;
+                        break;
+                    case 1 :
+                        newPurpose=1;
+                        newIsGo=0;
+                        break;
+                    case 2 :
+                        newPurpose=2;
+                        newIsGo=0;
+                        break;
+                    case 3 :
+                        newPurpose=3;
+                        newIsGo=0;
+                        break;
+                    case 4 :
+                        newPurpose=4;
+                        newIsGo=0;
+                        break;
+                    case 5 :
+                        newPurpose=5;
+                        newIsGo=0;
+                        break;
+                    case 6 :
+                        newPurpose=6;
+                        newIsGo=0;
+                        break;
+                    case 7 :
+                        newPurpose=7;
+                        newIsGo=0;
+                        break;
+                    case 8 :
+                        newPurpose=8;
+                        newIsGo=0;
+                        break;
+                    case 9:
+                        newPurpose=9;
+                        newIsGo=1;
+                    default:
+                }
+            }
+        });
+        //以上为niceSpinner设置
+        NavigationView navView=findViewById(R.id.nav_view);
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                Intent intent=new Intent(MainActivity.this,Time_howlong.class);
+                switch (menuItem.getItemId()){
+                    case R.id.nav_day:
+                        intent.putExtra("time",0);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_week:
+                        intent.putExtra("time",1);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_month:
+                        intent.putExtra("time",2);
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_all:
+                        intent.putExtra("time",3);
+                        startActivity(intent);
+                        break;
+                        default:
+                }
+                return true;
+            }
+        });
+        //以上为滑动界面设置
     }
 
     @Override

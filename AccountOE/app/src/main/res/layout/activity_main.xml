@@ -19,6 +19,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,12 +27,38 @@
             android:layout_below="@id/toolbar"
             android:textSize="30sp"
             android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最近十次账目"
+            android:id="@+id/tenText"
+            android:textSize="30sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/toolbar"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/ct"
+            android:layout_centerHorizontal="true"/>
+
+        <org.angmarch.views.NiceSpinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edi_purpose"
+            android:layout_alignRight="@id/ct"
+            android:layout_above="@id/edi_number"
+            android:textSize="15sp"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/newerAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar"
-            android:layout_above="@id/edi_number"/>
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@id/tenText"
+            android:layout_above="@id/edi_purpose"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
