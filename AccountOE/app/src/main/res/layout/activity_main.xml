@@ -50,6 +50,13 @@
             android:layout_alignRight="@id/ct"
             android:layout_above="@id/edi_number"
             android:textSize="15sp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/edi_purpose"
+            android:layout_above="@id/edi_number"
+            android:id="@+id/usethetime"
+            android:text="使用当前时间"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/newerAccount"

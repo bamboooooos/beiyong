@@ -30,6 +30,7 @@ import org.litepal.crud.DataSupport;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -69,6 +70,19 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
         //以上为初始数据设置
+        Calendar now = Calendar.getInstance();
+        final int year=now.get(Calendar.YEAR);
+        final int month=now.get(Calendar.MONTH)+1;
+        final int day=now.get(Calendar.DATE);
+        (findViewById(R.id.usethetime)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((TextView)findViewById(R.id.edi_year)).setText(""+year);
+                ((TextView)findViewById(R.id.edi_month)).setText(""+month);
+                ((TextView)findViewById(R.id.edi_day)).setText(""+day);
+            }
+        });
+        //时间获取
         (findViewById(R.id.getAc)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
