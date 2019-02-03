@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         NiceSpinner purpose = (NiceSpinner)findViewById(R.id.edi_purpose);
         List<String> ppsList = new ArrayList<>();
+        ppsList.add("其他消费");
         ppsList.add("饮食");
         ppsList.add("服饰美容");
         ppsList.add("生活日用");
@@ -135,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
         ppsList.add("通讯物流");
         ppsList.add("文教娱乐");
         ppsList.add("运动健康");
-        ppsList.add("其他消费");
         ppsList.add("收入");
         purpose.attachDataSource(ppsList);
         purpose.addOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //以上为niceSpinner设置
-        NavigationView navView=findViewById(R.id.nav_view);
+        final NavigationView navView=findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -194,18 +194,22 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.nav_day:
                         intent.putExtra("time",0);
+                        ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawers();
                         startActivity(intent);
                         break;
                     case R.id.nav_week:
                         intent.putExtra("time",1);
+                        ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawers();
                         startActivity(intent);
                         break;
                     case R.id.nav_month:
                         intent.putExtra("time",2);
+                        ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawers();
                         startActivity(intent);
                         break;
                     case R.id.nav_all:
                         intent.putExtra("time",3);
+                        ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawers();
                         startActivity(intent);
                         break;
                         default:
@@ -272,9 +276,11 @@ public class MainActivity extends AppCompatActivity {
     boolean isAcsNull(){
         if(accounts.isEmpty()){
             ((TextView)findViewById(R.id.isNull)).setText("账簿暂无账目");
+            ((TextView)findViewById(R.id.tenText)).setText("");
             return false;
         }else{
             ((TextView)findViewById(R.id.isNull)).setText("");
+            ((TextView)findViewById(R.id.tenText)).setText("最近十次账目");
             return true;
         }
     }

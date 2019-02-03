@@ -79,6 +79,16 @@ public class Time_howlong extends AppCompatActivity {
         }
         //数据筛选
         isAcsNull();
+        int result=total(accounts,1);
+        ((TextView)findViewById(R.id.Get)).setText("收入:"+result);
+        result=total(accounts,0);
+        ((TextView)findViewById(R.id.Put)).setText("支出:"+result);
+        result=total(accounts,2);
+        if(result>=0)
+            ((TextView)findViewById(R.id.total)).setText("总共支出:"+result);
+        else
+            ((TextView)findViewById(R.id.total)).setText("总共收入:"+(-result));
+        //数据统计
         final RecyclerView recyclerView=(RecyclerView)findViewById(R.id.AccountNeed);
         final LinearLayoutManager manager=new LinearLayoutManager(Time_howlong.this);
         recyclerView.setLayoutManager(manager);
@@ -92,18 +102,22 @@ public class Time_howlong extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.nav_day:
                         intent.putExtra("time",0);
+                        Time_howlong.this.finish();
                         startActivity(intent);
                         break;
                     case R.id.nav_week:
                         intent.putExtra("time",1);
+                        Time_howlong.this.finish();
                         startActivity(intent);
                         break;
                     case R.id.nav_month:
                         intent.putExtra("time",2);
+                        Time_howlong.this.finish();
                         startActivity(intent);
                         break;
                     case R.id.nav_all:
                         intent.putExtra("time",3);
+                        Time_howlong.this.finish();
                         startActivity(intent);
                         break;
                     default:
@@ -191,6 +205,35 @@ public class Time_howlong extends AppCompatActivity {
             default:
         }
         result=ndate;
+        return result;
+    }
+    int total(ArrayList<Account> data,int cases){//0是支出，1是收入，2是总计(支出为正)
+        int result=0;
+        switch (cases){
+            case 0:
+                for(int i=0;i<data.size();i++){
+                    if(data.get(i).getIsGo()==0){
+                        result+=Integer.parseInt(data.get(i).getNumber());
+                    }
+                }
+                break;
+            case 1:
+                for(int i=0;i<data.size();i++){
+                    if(data.get(i).getIsGo()==1){
+                        result+=Integer.parseInt(data.get(i).getNumber());
+                    }
+                }
+                break;
+            case 2:
+                for(int i=0;i<data.size();i++){
+                    if(data.get(i).getIsGo()==0){
+                        result+=Integer.parseInt(data.get(i).getNumber());
+                    }else {
+                        result-=Integer.parseInt(data.get(i).getNumber());
+                    }
+                }
+                break;
+        }
         return result;
     }
 }
