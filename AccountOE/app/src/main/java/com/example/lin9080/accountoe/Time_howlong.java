@@ -14,8 +14,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,9 +34,11 @@ public class Time_howlong extends AppCompatActivity {
     private ArrayList<Account> accounts=new ArrayList<>();
     private ArrayList<Account> ckAccounts=new ArrayList<>();
     final AccountAdapter adapter=new AccountAdapter(accounts);
+    final LinearLayoutManager manager=new LinearLayoutManager(Time_howlong.this);
     int timeof;
     int newPurpose=0;
     int newIsGo=0;
+    int ckVi=0;
     int[] ckPurpose=new int[10];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +103,6 @@ public class Time_howlong extends AppCompatActivity {
             ((TextView)findViewById(R.id.total)).setText("总共收入:"+(-result));
         //数据统计
         final RecyclerView recyclerView=(RecyclerView)findViewById(R.id.AccountNeed);
-        final LinearLayoutManager manager=new LinearLayoutManager(Time_howlong.this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
         //数据初始化
@@ -171,7 +174,31 @@ public class Time_howlong extends AppCompatActivity {
                 dialog.show();
                 break;
             case R.id.change:
-                Toast.makeText(Time_howlong.this,"编辑功能可用",Toast.LENGTH_SHORT).show();
+                if(ckVi==0) {
+                    for (int i = 0; i < accounts.size(); i++) {
+                        View view = manager.findViewByPosition(i);
+                        RelativeLayout layout = (RelativeLayout) view;
+                        TextView itemNb = layout.findViewById(R.id.newerNumber);
+                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
+                        params.leftMargin = itemNb.getLeft() + 100;
+                        params.rightMargin = itemNb.getRight() - 100;
+                        CheckBox itemCk = layout.findViewById(R.id.itemCk);
+                        itemCk.setVisibility(View.VISIBLE);
+                        ckVi=1;
+                    }
+                }else {
+                    for (int i = 0; i < accounts.size(); i++) {
+                        View view = manager.findViewByPosition(i);
+                        RelativeLayout layout = (RelativeLayout) view;
+                        TextView itemNb = layout.findViewById(R.id.newerNumber);
+                        CheckBox itemCk = layout.findViewById(R.id.itemCk);
+                        itemCk.setVisibility(View.GONE);
+                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
+                        params.leftMargin = itemNb.getLeft()-100;
+                        params.rightMargin = itemNb.getRight()+100;
+                        ckVi=0;
+                    }
+                }
                 break;
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);

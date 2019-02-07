@@ -20,6 +20,8 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -39,8 +41,10 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ArrayList<Account> accounts=new ArrayList<>();
     final AccountAdapter adapter=new AccountAdapter(accounts);
+    final LinearLayoutManager manager=new LinearLayoutManager(MainActivity.this);
     int newPurpose=0;
     int newIsGo=0;
+    int ckVi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,17 +60,11 @@ public class MainActivity extends AppCompatActivity {
         //以上为界面初始化设置
         LitePal.getDatabase();//数据库初始化
         ArrayList<Account> nAccounts=(ArrayList<Account>)DataSupport.findAll(Account.class);
-        int len=0;
         for(int i=nAccounts.size()-1;i>=0;i--){
             accounts.add(nAccounts.get(i));
-            if(len==9){
-                break;
-            }
-            len++;
         }
         isAcsNull();
         final RecyclerView recyclerView=(RecyclerView)findViewById(R.id.newerAccount);
-        final LinearLayoutManager manager=new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
         //以上为初始数据设置
@@ -252,7 +250,31 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
                 break;
             case R.id.change:
-                Toast.makeText(MainActivity.this,"编辑功能可用",Toast.LENGTH_SHORT).show();
+                if(ckVi==0) {
+                    for (int i = 0; i < accounts.size(); i++) {
+                        View view = manager.findViewByPosition(i);
+                        RelativeLayout layout = (RelativeLayout) view;
+                        TextView itemNb = layout.findViewById(R.id.newerNumber);
+                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
+                        params.leftMargin = itemNb.getLeft() + 100;
+                        params.rightMargin = itemNb.getRight() - 100;
+                        CheckBox itemCk = layout.findViewById(R.id.itemCk);
+                        itemCk.setVisibility(View.VISIBLE);
+                        ckVi=1;
+                    }
+                }else {
+                    for (int i = 0; i < accounts.size(); i++) {
+                        View view = manager.findViewByPosition(i);
+                        RelativeLayout layout = (RelativeLayout) view;
+                        TextView itemNb = layout.findViewById(R.id.newerNumber);
+                        CheckBox itemCk = layout.findViewById(R.id.itemCk);
+                        itemCk.setVisibility(View.GONE);
+                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
+                        params.leftMargin = itemNb.getLeft()-100;
+                        params.rightMargin = itemNb.getRight()+100;
+                        ckVi=0;
+                }
+            }
                 break;
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
