@@ -276,11 +276,9 @@ public class MainActivity extends AppCompatActivity {
     boolean isAcsNull(){
         if(accounts.isEmpty()){
             ((TextView)findViewById(R.id.isNull)).setText("账簿暂无账目");
-            ((TextView)findViewById(R.id.tenText)).setText("");
             return false;
         }else{
             ((TextView)findViewById(R.id.isNull)).setText("");
-            ((TextView)findViewById(R.id.tenText)).setText("最近十次账目");
             return true;
         }
     }

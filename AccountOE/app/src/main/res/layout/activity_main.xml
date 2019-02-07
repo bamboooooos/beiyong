@@ -32,15 +32,6 @@
             android:textSize="30sp"
             android:layout_centerHorizontal="true"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="最近十次账目"
-            android:id="@+id/tenText"
-            android:textSize="30sp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/toolbar"/>
-
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -68,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_below="@id/tenText"
+            android:layout_below="@id/toolbar"
             android:layout_above="@id/edi_purpose"/>
         <Button
             android:layout_width="wrap_content"

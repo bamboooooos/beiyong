@@ -1,5 +1,6 @@
 package com.example.lin9080.accountoe;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
@@ -13,6 +14,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,10 +30,12 @@ import java.util.Date;
 public class Time_howlong extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ArrayList<Account> accounts=new ArrayList<>();
+    private ArrayList<Account> ckAccounts=new ArrayList<>();
     final AccountAdapter adapter=new AccountAdapter(accounts);
     int timeof;
     int newPurpose=0;
     int newIsGo=0;
+    int[] ckPurpose=new int[10];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +60,7 @@ public class Time_howlong extends AppCompatActivity {
                         accounts.add(nAccounts.get(i));
                     }
                 }
+                copy(ckAccounts);
                 break;
             case 1:
                 for(int i=nAccounts.size()-1;i>=0;i--){
@@ -62,6 +68,7 @@ public class Time_howlong extends AppCompatActivity {
                         accounts.add(nAccounts.get(i));
                     }
                 }
+                copy(ckAccounts);
                 break;
             case 2:
                 for(int i=nAccounts.size()-1;i>=0;i--){
@@ -69,11 +76,13 @@ public class Time_howlong extends AppCompatActivity {
                         accounts.add(nAccounts.get(i));
                     }
                 }
+                copy(ckAccounts);
                 break;
             case 3:
                 for(int i=nAccounts.size()-1;i>=0;i--){
                     accounts.add(nAccounts.get(i));
                 }
+                copy(ckAccounts);
                 break;
                 default:
         }
@@ -126,6 +135,8 @@ public class Time_howlong extends AppCompatActivity {
             }
         });
         //以上为滑动界面设置
+        ckInit();
+        //以上为复选框初始化
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -146,6 +157,7 @@ public class Time_howlong extends AppCompatActivity {
                         RecyclerView recyclerView=findViewById(R.id.AccountNeed);
                         recyclerView.removeAllViews();
                         accounts.clear();
+                        copy(ckAccounts);
                         adapter.notifyDataSetChanged();
                         isAcsNull();
                     }
@@ -235,5 +247,142 @@ public class Time_howlong extends AppCompatActivity {
                 break;
         }
         return result;
+    }
+    void ckInit(){
+        for(int i=0;i<=9;i++){
+            ckPurpose[i]=0;
+        }
+        ((CheckBox)findViewById(R.id.qita)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    ckPurpose[0]=1;
+                }else {
+                    ckPurpose[0]=0;
+                }
+                flash();
+            }
+        });
+        ((CheckBox)findViewById(R.id.eat)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    ckPurpose[1]=1;
+                }else {
+                    ckPurpose[1]=0;
+                }
+                flash();
+            }
+        });
+        ((CheckBox)findViewById(R.id.fushi)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    ckPurpose[2]=1;
+                }else {
+                    ckPurpose[2]=0;
+                }
+                flash();
+            }
+        });
+        ((CheckBox)findViewById(R.id.riyong)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    ckPurpose[3]=1;
+                }else {
+                    ckPurpose[3]=0;
+                }
+                flash();
+            }
+        });
+        ((CheckBox)findViewById(R.id.jiaofei)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    ckPurpose[4]=1;
+                }else {
+                    ckPurpose[4]=0;
+                }
+                flash();
+            }
+        });
+        ((CheckBox)findViewById(R.id.jiaotong)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    ckPurpose[5]=1;
+                }else {
+                    ckPurpose[5]=0;
+                }
+                flash();
+            }
+        });
+        ((CheckBox)findViewById(R.id.tongxun)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    ckPurpose[6]=1;
+                }else {
+                    ckPurpose[6]=0;
+                }
+                flash();
+            }
+        });
+        ((CheckBox)findViewById(R.id.yule)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    ckPurpose[7]=1;
+                }else {
+                    ckPurpose[7]=0;
+                }
+                flash();
+            }
+        });
+        ((CheckBox)findViewById(R.id.yundong)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    ckPurpose[8]=1;
+                }else {
+                    ckPurpose[8]=0;
+                }
+                flash();
+            }
+        });
+        ((CheckBox)findViewById(R.id.shouru)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    ckPurpose[9]=1;
+                }else {
+                    ckPurpose[9]=0;
+                }
+                flash();
+            }
+        });
+    }
+    void copy(ArrayList<Account> newAr){
+        newAr.clear();
+        newAr.addAll(accounts);
+    }
+    void flash(){
+        int isnull=1;
+        accounts.clear();
+        for(int i=0;i<10;i++){
+            if(ckPurpose[i]==1){
+                isnull=0;
+                for(int j=0;j<ckAccounts.size();j++){
+                    if(ckAccounts.get(j).getPurpose()==i){
+                        accounts.add(ckAccounts.get(j));
+                    }
+                }
+            }
+        }
+        if(isnull==1){
+            accounts.addAll(ckAccounts);
+        }
+        adapter.notifyDataSetChanged();
     }
 }
