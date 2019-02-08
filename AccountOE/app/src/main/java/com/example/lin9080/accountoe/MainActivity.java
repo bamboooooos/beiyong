@@ -68,13 +68,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
         //以上为初始数据设置
-        Calendar now = Calendar.getInstance();
-        final int year=now.get(Calendar.YEAR);
-        final int month=now.get(Calendar.MONTH)+1;
-        final int day=now.get(Calendar.DATE);
         (findViewById(R.id.usethetime)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Calendar now = Calendar.getInstance();
+                final int year=now.get(Calendar.YEAR);
+                final int month=now.get(Calendar.MONTH)+1;
+                final int day=now.get(Calendar.DATE);
                 ((TextView)findViewById(R.id.edi_year)).setText(""+year);
                 ((TextView)findViewById(R.id.edi_month)).setText(""+month);
                 ((TextView)findViewById(R.id.edi_day)).setText(""+day);
@@ -108,13 +108,6 @@ public class MainActivity extends AppCompatActivity {
                     account.setIsGo(newIsGo);
                     account.save();
                     accounts.add(0, account);
-                    while (true) {
-                        if (accounts.size() > 10) {
-                            accounts.remove(10);
-                        }else{
-                            break;
-                        }
-                    }
                     isAcsNull();
                     adapter.notifyItemInserted(0);
                     recyclerView.getLayoutManager().scrollToPosition(0);
@@ -283,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-    boolean isNumber(String string){
+    static boolean isNumber(String string){
         if(string.length()<=0) {
             return false;
         }else{

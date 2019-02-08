@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/changeAc_layout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="325dp"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="@drawable/head">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/title"
+        android:text="编辑账目"
+        android:textColor="#de6654"
+        android:textSize="30sp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/getChanged_now"
+        android:text="使用当前时间"/>
+
+    <org.angmarch.views.NiceSpinner
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:id="@+id/changePurpose"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/title"
+        app:arrowTint="@color/colorPrimary"
+        app:textTint="@color/colorAccent"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/title"
+        android:layout_toRightOf="@id/changePurpose"
+        android:layout_marginTop="10dp"
+        android:id="@+id/changeWhatDo"
+        android:textSize="25sp"
+        android:hint="备注"/>
+    <EditText
+        android:layout_width="80sp"
+        android:layout_height="50dp"
+        android:layout_below="@id/changePurpose"
+        android:layout_marginTop="10dp"
+        android:id="@+id/changeNumber"
+        android:textSize="25sp"
+        android:hint="金额"/>
+    <EditText
+        android:layout_width="80sp"
+        android:layout_height="50dp"
+        android:layout_below="@id/changePurpose"
+        android:layout_toRightOf="@id/changeNumber"
+        android:layout_marginTop="10dp"
+        android:id="@+id/changeYear"
+        android:textSize="25sp"
+        android:hint="年"/>
+    <EditText
+        android:layout_width="80sp"
+        android:layout_height="50dp"
+        android:layout_below="@id/changePurpose"
+        android:layout_toRightOf="@id/changeYear"
+        android:layout_marginTop="10dp"
+        android:id="@+id/changeMonth"
+        android:textSize="25sp"
+        android:hint="月"/>
+    <EditText
+        android:layout_width="80sp"
+        android:layout_height="50dp"
+        android:layout_below="@id/changePurpose"
+        android:layout_toRightOf="@id/changeMonth"
+        android:layout_marginTop="10dp"
+        android:id="@+id/changeDay"
+        android:textSize="25sp"
+        android:hint="日"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/changeNumber"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/commit"
+            android:layout_width="115dp"
+            android:layout_height="45dp"
+            android:text="确定"
+            android:textColor="#de6654"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="115dp"
+            android:layout_height="45dp"
+            android:text="取消"
+            android:textColor="#646464"
+            android:textSize="15sp" />
+    </LinearLayout>
+</RelativeLayout>

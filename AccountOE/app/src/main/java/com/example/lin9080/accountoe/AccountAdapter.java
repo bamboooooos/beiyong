@@ -1,5 +1,7 @@
 package com.example.lin9080.accountoe;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -19,6 +22,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
         maccounts=accounts;
     }
     static class ViewHolder extends RecyclerView.ViewHolder{
+        View AcView;
         TextView number;
         TextView Time;
         TextView WhatDo;
@@ -26,6 +30,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
 
         public ViewHolder(View view){
             super(view);
+            AcView=view;
             number=(TextView)view.findViewById(R.id.newerNumber);
             Time=(TextView)view.findViewById(R.id.newerTime);
             WhatDo=(TextView) view.findViewById(R.id.newerWhatDo);
@@ -36,7 +41,18 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item,parent,false);
-        ViewHolder viewHolder=new ViewHolder(view);
+        final ViewHolder viewHolder=new ViewHolder(view);
+        viewHolder.AcView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position=viewHolder.getAdapterPosition();
+                Account account=maccounts.get(position);
+                final MyDialog myDialog;
+                myDialog=new MyDialog(view.getContext(), R.style.Dialog,account);
+                myDialog.show();
+                notifyDataSetChanged();
+            }
+        });
         return viewHolder;
     }
 
