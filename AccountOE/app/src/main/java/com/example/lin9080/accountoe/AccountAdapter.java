@@ -53,6 +53,7 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
                 notifyDataSetChanged();
             }
         });
+        viewHolder.AcView.setClickable(false);
         return viewHolder;
     }
 

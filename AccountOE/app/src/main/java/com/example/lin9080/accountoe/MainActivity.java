@@ -246,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
                 if(ckVi==0) {
                     for (int i = 0; i < accounts.size(); i++) {
                         View view = manager.findViewByPosition(i);
+                        view.setClickable(true);
                         RelativeLayout layout = (RelativeLayout) view;
                         TextView itemNb = layout.findViewById(R.id.newerNumber);
                         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
@@ -258,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     for (int i = 0; i < accounts.size(); i++) {
                         View view = manager.findViewByPosition(i);
+                        view.setClickable(false);
                         RelativeLayout layout = (RelativeLayout) view;
                         TextView itemNb = layout.findViewById(R.id.newerNumber);
                         CheckBox itemCk = layout.findViewById(R.id.itemCk);
@@ -268,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
                         ckVi=0;
                 }
             }
-                break;
+            break;
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
