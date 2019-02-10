@@ -50,7 +50,12 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
                 final MyDialog myDialog;
                 myDialog=new MyDialog(view.getContext(), R.style.Dialog,account);
                 myDialog.show();
-                notifyDataSetChanged();
+                myDialog.setOnDismissListener(new DialogInterface.OnDismissListener(){
+                    @Override
+                    public void onDismiss(DialogInterface dialog){
+                        notifyDataSetChanged();
+                    }
+                });
             }
         });
         viewHolder.AcView.setClickable(false);

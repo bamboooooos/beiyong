@@ -178,6 +178,8 @@ public class Time_howlong extends AppCompatActivity {
                     for (int i = 0; i < accounts.size(); i++) {
                         View view = manager.findViewByPosition(i);
                         view.setClickable(true);
+                        item.setIcon(R.drawable.ckvi_icon);
+                        Toast.makeText(Time_howlong.this,"编辑功能启用",Toast.LENGTH_SHORT).show();
                         RelativeLayout layout = (RelativeLayout) view;
                         TextView itemNb = layout.findViewById(R.id.newerNumber);
                         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
@@ -191,6 +193,8 @@ public class Time_howlong extends AppCompatActivity {
                     for (int i = 0; i < accounts.size(); i++) {
                         View view = manager.findViewByPosition(i);
                         view.setClickable(false);
+                        item.setIcon(R.mipmap.change);
+                        Toast.makeText(Time_howlong.this,"编辑功能关闭",Toast.LENGTH_SHORT).show();
                         RelativeLayout layout = (RelativeLayout) view;
                         TextView itemNb = layout.findViewById(R.id.newerNumber);
                         CheckBox itemCk = layout.findViewById(R.id.itemCk);

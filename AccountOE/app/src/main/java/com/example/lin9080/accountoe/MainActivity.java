@@ -2,6 +2,7 @@ package com.example.lin9080.accountoe;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +11,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.ActionMenuItemView;
+import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +24,8 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         android.support.v7.widget.Toolbar toolbar =findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
-        ActionBar actionBar=getSupportActionBar();
+        final ActionBar actionBar=getSupportActionBar();
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.toleft_dr);
@@ -60,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         //以上为界面初始化设置
         LitePal.getDatabase();//数据库初始化
         ArrayList<Account> nAccounts=(ArrayList<Account>)DataSupport.findAll(Account.class);
+        accounts.clear();
         for(int i=nAccounts.size()-1;i>=0;i--){
             accounts.add(nAccounts.get(i));
         }
@@ -108,9 +114,9 @@ public class MainActivity extends AppCompatActivity {
                     account.setIsGo(newIsGo);
                     account.save();
                     accounts.add(0, account);
-                    isAcsNull();
                     adapter.notifyItemInserted(0);
                     recyclerView.getLayoutManager().scrollToPosition(0);
+                    isAcsNull();
                 }
             }
         });
@@ -212,6 +218,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        ArrayList<Account> nAccounts=(ArrayList<Account>)DataSupport.findAll(Account.class);
+            accounts.clear();
+        for(int i=nAccounts.size()-1;i>=0;i--){
+            accounts.add(nAccounts.get(i));
+        }
+        isAcsNull();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar,menu);
         return true;
@@ -244,9 +262,13 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.change:
                 if(ckVi==0) {
+                    findViewById(R.id.getAc).setVisibility(View.GONE);
+                    item.setIcon(R.drawable.ckvi_icon);
                     for (int i = 0; i < accounts.size(); i++) {
                         View view = manager.findViewByPosition(i);
-                        view.setClickable(true);
+                        if(!view.isClickable()) {
+                            view.setClickable(true);
+                        }
                         RelativeLayout layout = (RelativeLayout) view;
                         TextView itemNb = layout.findViewById(R.id.newerNumber);
                         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
@@ -254,12 +276,23 @@ public class MainActivity extends AppCompatActivity {
                         params.rightMargin = itemNb.getRight() - 100;
                         CheckBox itemCk = layout.findViewById(R.id.itemCk);
                         itemCk.setVisibility(View.VISIBLE);
-                        ckVi=1;
+                        itemCk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                Toast.makeText(MainActivity.this,"you click a useless CheckBox",Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
+                    ckVi=1;
+                    Toast.makeText(MainActivity.this,"编辑功能启用",Toast.LENGTH_SHORT).show();
                 }else {
+                    findViewById(R.id.getAc).setVisibility(View.VISIBLE);
+                    item.setIcon(R.mipmap.change);
                     for (int i = 0; i < accounts.size(); i++) {
                         View view = manager.findViewByPosition(i);
-                        view.setClickable(false);
+                        if(view.isClickable()) {
+                            view.setClickable(false);
+                        }
                         RelativeLayout layout = (RelativeLayout) view;
                         TextView itemNb = layout.findViewById(R.id.newerNumber);
                         CheckBox itemCk = layout.findViewById(R.id.itemCk);
@@ -267,8 +300,9 @@ public class MainActivity extends AppCompatActivity {
                         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
                         params.leftMargin = itemNb.getLeft()-100;
                         params.rightMargin = itemNb.getRight()+100;
-                        ckVi=0;
-                }
+                    }
+                    ckVi=0;
+                    Toast.makeText(MainActivity.this,"编辑功能关闭",Toast.LENGTH_SHORT).show();
             }
             break;
             case android.R.id.home:

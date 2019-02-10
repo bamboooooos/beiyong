@@ -65,6 +65,10 @@ public class MyDialog extends Dialog implements View.OnClickListener {
         ppsList.add("文教娱乐");
         ppsList.add("运动健康");
         ppsList.add("收入");
+        ppsList.add("");
+        ppsList.add("");
+        ppsList.add("");
+        ppsList.add("");
         changed_Purpose.attachDataSource(ppsList);
         changed_Purpose.addOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
