@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
@@ -40,6 +41,7 @@ public class Time_howlong extends AppCompatActivity {
     int newIsGo=0;
     int ckVi=0;
     int[] ckPurpose=new int[10];
+    Toast sToast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,12 +185,22 @@ public class Time_howlong extends AppCompatActivity {
                         RelativeLayout layout = (RelativeLayout) view;
                         TextView itemNb = layout.findViewById(R.id.newerNumber);
                         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
-                        params.leftMargin = itemNb.getLeft() + 100;
-                        params.rightMargin = itemNb.getRight() - 100;
-                        CheckBox itemCk = layout.findViewById(R.id.itemCk);
-                        itemCk.setVisibility(View.VISIBLE);
-                        ckVi=1;
+                        params.leftMargin = itemNb.getLeft() + 120;
+                        params.rightMargin = itemNb.getRight() - 120;
+                        TextView itemWhatDo=layout.findViewById(R.id.newerWhatDo);
+                        RelativeLayout.LayoutParams params1=(RelativeLayout.LayoutParams) (itemWhatDo).getLayoutParams();
+                        params1.leftMargin=itemWhatDo.getLeft()+120;
+                        Button delete = layout.findViewById(R.id.deleteItem);
+                        delete.setVisibility(View.VISIBLE);
                     }
+                    ckVi=1;
+                    if(sToast==null){
+                        sToast=Toast.makeText(Time_howlong.this,"编辑功能启用",Toast.LENGTH_SHORT);
+                    }else {
+                        sToast.setText("编辑功能启用");
+                        sToast.setDuration(Toast.LENGTH_SHORT);
+                    }
+                    sToast.show();
                 }else {
                     for (int i = 0; i < accounts.size(); i++) {
                         View view = manager.findViewByPosition(i);
@@ -197,13 +209,23 @@ public class Time_howlong extends AppCompatActivity {
                         Toast.makeText(Time_howlong.this,"编辑功能关闭",Toast.LENGTH_SHORT).show();
                         RelativeLayout layout = (RelativeLayout) view;
                         TextView itemNb = layout.findViewById(R.id.newerNumber);
-                        CheckBox itemCk = layout.findViewById(R.id.itemCk);
-                        itemCk.setVisibility(View.GONE);
+                        Button delete = layout.findViewById(R.id.deleteItem);
+                        delete.setVisibility(View.GONE);
                         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
-                        params.leftMargin = itemNb.getLeft()-100;
-                        params.rightMargin = itemNb.getRight()+100;
-                        ckVi=0;
+                        params.leftMargin = itemNb.getLeft()-120;
+                        params.rightMargin = itemNb.getRight()+120;
+                        TextView itemWhatDo=layout.findViewById(R.id.newerWhatDo);
+                        RelativeLayout.LayoutParams params1=(RelativeLayout.LayoutParams) (itemWhatDo).getLayoutParams();
+                        params1.leftMargin=itemWhatDo.getLeft()-120;
                     }
+                    ckVi=0;
+                    if(sToast==null){
+                        sToast=Toast.makeText(Time_howlong.this,"编辑功能关闭",Toast.LENGTH_SHORT);
+                    }else {
+                        sToast.setText("编辑功能关闭");
+                        sToast.setDuration(Toast.LENGTH_SHORT);
+                    }
+                    sToast.show();
                 }
                 break;
             case android.R.id.home:

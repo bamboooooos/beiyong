@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     int newPurpose=0;
     int newIsGo=0;
     int ckVi;
+    Toast fToast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -266,43 +267,51 @@ public class MainActivity extends AppCompatActivity {
                     item.setIcon(R.drawable.ckvi_icon);
                     for (int i = 0; i < accounts.size(); i++) {
                         View view = manager.findViewByPosition(i);
-                        if(!view.isClickable()) {
-                            view.setClickable(true);
-                        }
+                        view.setClickable(true);
                         RelativeLayout layout = (RelativeLayout) view;
                         TextView itemNb = layout.findViewById(R.id.newerNumber);
                         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
-                        params.leftMargin = itemNb.getLeft() + 100;
-                        params.rightMargin = itemNb.getRight() - 100;
-                        CheckBox itemCk = layout.findViewById(R.id.itemCk);
-                        itemCk.setVisibility(View.VISIBLE);
-                        itemCk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                            @Override
-                            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                                Toast.makeText(MainActivity.this,"you click a useless CheckBox",Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        params.leftMargin = itemNb.getLeft() + 120;
+                        params.rightMargin = itemNb.getRight() - 120;
+                        TextView itemWhatDo=layout.findViewById(R.id.newerWhatDo);
+                        RelativeLayout.LayoutParams params1=(RelativeLayout.LayoutParams) (itemWhatDo).getLayoutParams();
+                        params1.leftMargin=itemWhatDo.getLeft()+120;
+                        Button delete = layout.findViewById(R.id.deleteItem);
+                        delete.setVisibility(View.VISIBLE);
                     }
                     ckVi=1;
-                    Toast.makeText(MainActivity.this,"编辑功能启用",Toast.LENGTH_SHORT).show();
+                    if(fToast==null){
+                        fToast=Toast.makeText(MainActivity.this,"编辑功能启用",Toast.LENGTH_SHORT);
+                    }else {
+                        fToast.setText("编辑功能启用");
+                        fToast.setDuration(Toast.LENGTH_SHORT);
+                    }
+                    fToast.show();
                 }else {
                     findViewById(R.id.getAc).setVisibility(View.VISIBLE);
                     item.setIcon(R.mipmap.change);
                     for (int i = 0; i < accounts.size(); i++) {
                         View view = manager.findViewByPosition(i);
-                        if(view.isClickable()) {
-                            view.setClickable(false);
-                        }
+                        view.setClickable(false);
                         RelativeLayout layout = (RelativeLayout) view;
                         TextView itemNb = layout.findViewById(R.id.newerNumber);
-                        CheckBox itemCk = layout.findViewById(R.id.itemCk);
-                        itemCk.setVisibility(View.GONE);
+                        Button delete = layout.findViewById(R.id.deleteItem);
+                        delete.setVisibility(View.GONE);
                         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
-                        params.leftMargin = itemNb.getLeft()-100;
-                        params.rightMargin = itemNb.getRight()+100;
+                        params.leftMargin = itemNb.getLeft()-120;
+                        params.rightMargin = itemNb.getRight()+120;
+                        TextView itemWhatDo=layout.findViewById(R.id.newerWhatDo);
+                        RelativeLayout.LayoutParams params1=(RelativeLayout.LayoutParams) (itemWhatDo).getLayoutParams();
+                        params1.leftMargin=itemWhatDo.getLeft()-120;
                     }
                     ckVi=0;
-                    Toast.makeText(MainActivity.this,"编辑功能关闭",Toast.LENGTH_SHORT).show();
+                    if(fToast==null){
+                        fToast=Toast.makeText(MainActivity.this,"编辑功能关闭",Toast.LENGTH_SHORT);
+                    }else {
+                        fToast.setText("编辑功能关闭");
+                        fToast.setDuration(Toast.LENGTH_SHORT);
+                    }
+                    fToast.show();
             }
             break;
             case android.R.id.home:
