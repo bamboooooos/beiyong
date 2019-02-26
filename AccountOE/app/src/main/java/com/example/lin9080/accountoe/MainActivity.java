@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     int newPurpose=0;
     int newIsGo=0;
     int ckVi;
+    int canEdit=0;
     Toast fToast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -265,20 +266,12 @@ public class MainActivity extends AppCompatActivity {
                 if(ckVi==0) {
                     findViewById(R.id.getAc).setVisibility(View.GONE);
                     item.setIcon(R.drawable.ckvi_icon);
+                    canEdit=1;
                     for (int i = 0; i < accounts.size(); i++) {
-                        View view = manager.findViewByPosition(i);
-                        view.setClickable(true);
-                        RelativeLayout layout = (RelativeLayout) view;
-                        TextView itemNb = layout.findViewById(R.id.newerNumber);
-                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
-                        params.leftMargin = itemNb.getLeft() + 120;
-                        params.rightMargin = itemNb.getRight() - 120;
-                        TextView itemWhatDo=layout.findViewById(R.id.newerWhatDo);
-                        RelativeLayout.LayoutParams params1=(RelativeLayout.LayoutParams) (itemWhatDo).getLayoutParams();
-                        params1.leftMargin=itemWhatDo.getLeft()+120;
-                        Button delete = layout.findViewById(R.id.deleteItem);
-                        delete.setVisibility(View.VISIBLE);
+                        accounts.get(i).setCanEdit(canEdit);
+                        accounts.get(i).save();
                     }
+                    adapter.notifyDataSetChanged();
                     ckVi=1;
                     if(fToast==null){
                         fToast=Toast.makeText(MainActivity.this,"编辑功能启用",Toast.LENGTH_SHORT);
@@ -290,20 +283,12 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     findViewById(R.id.getAc).setVisibility(View.VISIBLE);
                     item.setIcon(R.mipmap.change);
+                    canEdit=0;
                     for (int i = 0; i < accounts.size(); i++) {
-                        View view = manager.findViewByPosition(i);
-                        view.setClickable(false);
-                        RelativeLayout layout = (RelativeLayout) view;
-                        TextView itemNb = layout.findViewById(R.id.newerNumber);
-                        Button delete = layout.findViewById(R.id.deleteItem);
-                        delete.setVisibility(View.GONE);
-                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
-                        params.leftMargin = itemNb.getLeft()-120;
-                        params.rightMargin = itemNb.getRight()+120;
-                        TextView itemWhatDo=layout.findViewById(R.id.newerWhatDo);
-                        RelativeLayout.LayoutParams params1=(RelativeLayout.LayoutParams) (itemWhatDo).getLayoutParams();
-                        params1.leftMargin=itemWhatDo.getLeft()-120;
+                        accounts.get(i).setCanEdit(canEdit);
+                        accounts.get(i).save();
                     }
+                    adapter.notifyDataSetChanged();
                     ckVi=0;
                     if(fToast==null){
                         fToast=Toast.makeText(MainActivity.this,"编辑功能关闭",Toast.LENGTH_SHORT);

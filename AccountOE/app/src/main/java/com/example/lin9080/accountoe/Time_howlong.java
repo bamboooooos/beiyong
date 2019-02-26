@@ -25,6 +25,7 @@ import android.widget.Toast;
 import org.litepal.LitePal;
 import org.litepal.crud.DataSupport;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,6 +41,7 @@ public class Time_howlong extends AppCompatActivity {
     int newPurpose=0;
     int newIsGo=0;
     int ckVi=0;
+    int canEdit=0;
     int[] ckPurpose=new int[10];
     Toast sToast;
     @Override
@@ -177,22 +179,13 @@ public class Time_howlong extends AppCompatActivity {
                 break;
             case R.id.change:
                 if(ckVi==0) {
+                    item.setIcon(R.drawable.ckvi_icon);
+                    canEdit=1;
                     for (int i = 0; i < accounts.size(); i++) {
-                        View view = manager.findViewByPosition(i);
-                        view.setClickable(true);
-                        item.setIcon(R.drawable.ckvi_icon);
-                        Toast.makeText(Time_howlong.this,"编辑功能启用",Toast.LENGTH_SHORT).show();
-                        RelativeLayout layout = (RelativeLayout) view;
-                        TextView itemNb = layout.findViewById(R.id.newerNumber);
-                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
-                        params.leftMargin = itemNb.getLeft() + 120;
-                        params.rightMargin = itemNb.getRight() - 120;
-                        TextView itemWhatDo=layout.findViewById(R.id.newerWhatDo);
-                        RelativeLayout.LayoutParams params1=(RelativeLayout.LayoutParams) (itemWhatDo).getLayoutParams();
-                        params1.leftMargin=itemWhatDo.getLeft()+120;
-                        Button delete = layout.findViewById(R.id.deleteItem);
-                        delete.setVisibility(View.VISIBLE);
+                        accounts.get(i).setCanEdit(canEdit);
+                        accounts.get(i).save();
                     }
+                    adapter.notifyDataSetChanged();
                     ckVi=1;
                     if(sToast==null){
                         sToast=Toast.makeText(Time_howlong.this,"编辑功能启用",Toast.LENGTH_SHORT);
@@ -202,22 +195,13 @@ public class Time_howlong extends AppCompatActivity {
                     }
                     sToast.show();
                 }else {
+                    item.setIcon(R.mipmap.change);
+                    canEdit=0;
                     for (int i = 0; i < accounts.size(); i++) {
-                        View view = manager.findViewByPosition(i);
-                        view.setClickable(false);
-                        item.setIcon(R.mipmap.change);
-                        Toast.makeText(Time_howlong.this,"编辑功能关闭",Toast.LENGTH_SHORT).show();
-                        RelativeLayout layout = (RelativeLayout) view;
-                        TextView itemNb = layout.findViewById(R.id.newerNumber);
-                        Button delete = layout.findViewById(R.id.deleteItem);
-                        delete.setVisibility(View.GONE);
-                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) (itemNb).getLayoutParams();
-                        params.leftMargin = itemNb.getLeft()-120;
-                        params.rightMargin = itemNb.getRight()+120;
-                        TextView itemWhatDo=layout.findViewById(R.id.newerWhatDo);
-                        RelativeLayout.LayoutParams params1=(RelativeLayout.LayoutParams) (itemWhatDo).getLayoutParams();
-                        params1.leftMargin=itemWhatDo.getLeft()-120;
+                        accounts.get(i).setCanEdit(canEdit);
+                        accounts.get(i).save();
                     }
+                    adapter.notifyDataSetChanged();
                     ckVi=0;
                     if(sToast==null){
                         sToast=Toast.makeText(Time_howlong.this,"编辑功能关闭",Toast.LENGTH_SHORT);

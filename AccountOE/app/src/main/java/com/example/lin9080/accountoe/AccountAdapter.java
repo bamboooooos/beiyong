@@ -28,12 +28,10 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
         TextView Time;
         TextView WhatDo;
         TextView Purpose;
-        Button delete;
 
         public ViewHolder(View view){
             super(view);
             AcView=view;
-            delete=(Button)view.findViewById(R.id.deleteItem);
             number=(TextView)view.findViewById(R.id.newerNumber);
             Time=(TextView)view.findViewById(R.id.newerTime);
             WhatDo=(TextView) view.findViewById(R.id.newerWhatDo);
@@ -62,7 +60,6 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
             }
         });
         viewHolder.AcView.setClickable(false);
-        //TODO 在此写入编辑的逻辑
         return viewHolder;
     }
 
@@ -72,6 +69,11 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
         holder.number.setText("金额"+account.getNumber()+"");
         holder.Time.setText(account.getUseTime()+"");
         holder.WhatDo.setText(account.getWhatDo()+"");
+        if(account.getCanEdit()==1){
+            holder.AcView.setClickable(true);
+        }else{
+            holder.AcView.setClickable(false);
+        }
         switch (account.getPurpose()){
             case 1:
                 holder.itemView.setBackgroundColor(Color.LTGRAY);
