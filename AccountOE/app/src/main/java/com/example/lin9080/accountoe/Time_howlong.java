@@ -144,6 +144,11 @@ public class Time_howlong extends AppCompatActivity {
         //以上为滑动界面设置
         ckInit();
         //以上为复选框初始化
+        for(int i=0;i<accounts.size();i++){
+            accounts.get(i).setCanEdit(0);
+            accounts.get(i).save();
+        }
+        adapter.notifyDataSetChanged();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

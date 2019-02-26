@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.litepal.crud.DataSupport;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -45,18 +46,26 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
         final ViewHolder viewHolder=new ViewHolder(view);
         viewHolder.AcView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                int position=viewHolder.getAdapterPosition();
+            public void onClick(final View view) {
+                final int position=viewHolder.getAdapterPosition();
                 Account account=maccounts.get(position);
                 final MyDialog myDialog;
                 myDialog=new MyDialog(view.getContext(), R.style.Dialog,account);
-                myDialog.show();
                 myDialog.setOnDismissListener(new DialogInterface.OnDismissListener(){
                     @Override
                     public void onDismiss(DialogInterface dialog){
                         notifyDataSetChanged();
                     }
                 });
+                myDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        maccounts.remove(position);
+                        notifyDataSetChanged();
+                    }
+                });
+                myDialog.setCancelable(false);
+                myDialog.show();
             }
         });
         viewHolder.AcView.setClickable(false);
@@ -76,43 +85,43 @@ public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.ViewHold
         }
         switch (account.getPurpose()){
             case 1:
-                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.itemView.setBackgroundColor(0XFFAFEEEE);
                 holder.Purpose.setText("饮食");
                 break;
             case 2:
-                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.itemView.setBackgroundColor(0XFFAFEEEE);
                 holder.Purpose.setText("服饰美容");
                 break;
             case 3:
-                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.itemView.setBackgroundColor(0XFFAFEEEE);
                 holder.Purpose.setText("生活日用");
                 break;
             case 4:
-                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.itemView.setBackgroundColor(0XFFAFEEEE);
                 holder.Purpose.setText("住房缴费");
                 break;
             case 5:
-                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.itemView.setBackgroundColor(0XFFAFEEEE);
                 holder.Purpose.setText("交通出行");
                 break;
             case 6:
-                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.itemView.setBackgroundColor(0XFFAFEEEE);
                 holder.Purpose.setText("通讯物流");
                 break;
             case 7:
-                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.itemView.setBackgroundColor(0XFFAFEEEE);
                 holder.Purpose.setText("文教娱乐");
                 break;
             case 8:
-                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.itemView.setBackgroundColor(0XFFAFEEEE);
                 holder.Purpose.setText("运动健康");
                 break;
             case 9:
-                holder.itemView.setBackgroundColor(Color.GRAY);
+                holder.itemView.setBackgroundColor(0XFF00FF7F);
                 holder.Purpose.setText("收入");
                 break;
             case 0:
-                holder.itemView.setBackgroundColor(Color.LTGRAY);
+                holder.itemView.setBackgroundColor(0XFFAFEEEE);
                 holder.Purpose.setText("其他");
                 break;
                 default:

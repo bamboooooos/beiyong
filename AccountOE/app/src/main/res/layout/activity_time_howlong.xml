@@ -6,7 +6,7 @@
     android:id="@+id/time_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/nav_header_img"
+    android:background="#6495ED"
     tools:context=".Time_howlong">
 
     <RelativeLayout
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:id="@+id/toolbar2"
-            android:background="?attr/colorPrimary"
+            android:background="#4682B4"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 

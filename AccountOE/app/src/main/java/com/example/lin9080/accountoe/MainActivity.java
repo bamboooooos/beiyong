@@ -217,6 +217,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //以上为滑动界面设置
+        for (int i = 0; i < accounts.size(); i++) {
+            accounts.get(i).setCanEdit(0);
+            accounts.get(i).save();
+        }
+        adapter.notifyDataSetChanged();
+        //子项不可点击初始化
     }
 
     @Override

@@ -23,7 +23,7 @@ public class MyDialog extends Dialog implements View.OnClickListener {
     private Account account;
     private EditText changed_number,changed_WhatDo,changed_Year,changed_Month,changed_Day;
     private NiceSpinner changed_Purpose;
-    private Button commit, cancel ,getNow;
+    private Button commit, cancel ,getNow ,deleteItem;
     private LeaveMyDialogListener listener;
 
     public interface LeaveMyDialogListener {
@@ -54,6 +54,7 @@ public class MyDialog extends Dialog implements View.OnClickListener {
         changed_Day = (EditText) findViewById(R.id.changeDay);
         changed_Purpose = (NiceSpinner) findViewById(R.id.changePurpose);
         getNow = (Button) findViewById(R.id.getChanged_now);
+        deleteItem =(Button)findViewById(R.id.deleteItem) ;
         List<String> ppsList = new ArrayList<>();
         ppsList.add("其他消费");
         ppsList.add("饮食");
@@ -164,10 +165,18 @@ public class MyDialog extends Dialog implements View.OnClickListener {
                 dismiss();
             }
         });
+        deleteItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                account.delete();
+                cancel();
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         listener.onClick(v);
     }
+
 }
